@@ -29,6 +29,7 @@ const CalculatorOperations = {
   '*': (firstOperand: number, secondOperand: number) => firstOperand * secondOperand,
   '+': (firstOperand: number, secondOperand: number) => firstOperand + secondOperand,
   '-': (firstOperand: number, secondOperand: number) => firstOperand - secondOperand,
+  '%': (firstOperand: number, secondOperand: number) => firstOperand % secondOperand,
   '=': (_: number, secondOperand: number) => secondOperand,
 };
 
@@ -56,19 +57,6 @@ export function Calculator() {
 
   const toggleSign = () => {
     setDisplayValue(String(parseFloat(displayValue) * -1));
-  };
-  
-  const inputPercent = () => {
-    const currentValue = parseFloat(displayValue);
-    if (currentValue === 0) return;
-    const fixedDigits = displayValue.replace(/^-?\d*\.?/, '');
-    setDisplayValue(String(currentValue / 100).slice(0, 15 - fixedDigits.length));
-  };
-
-  const applyTrigFunction = (func: (x: number) => number) => {
-    const currentValue = parseFloat(displayValue);
-    const result = func(currentValue * (Math.PI / 180)); // Convert degrees to radians
-    setDisplayValue(String(result).slice(0, 15));
   };
 
   const clearAll = () => {
@@ -111,13 +99,9 @@ export function Calculator() {
         </div>
         <CardContent className="p-1">
           <div className="grid grid-cols-4 gap-2">
-            <CalculatorButton onClick={() => applyTrigFunction(Math.sin)} className="bg-secondary text-secondary-foreground">sin</CalculatorButton>
-            <CalculatorButton onClick={() => applyTrigFunction(Math.cos)} className="bg-secondary text-secondary-foreground">cos</CalculatorButton>
-            <CalculatorButton onClick={() => applyTrigFunction(Math.tan)} className="bg-secondary text-secondary-foreground">tan</CalculatorButton>
-            
-            <CalculatorButton onClick={clearAll} className="bg-secondary text-secondary-foreground col-start-1">AC</CalculatorButton>
+            <CalculatorButton onClick={clearAll} className="bg-secondary text-secondary-foreground">AC</CalculatorButton>
             <CalculatorButton onClick={toggleSign} className="bg-secondary text-secondary-foreground"><PlusSquare /></CalculatorButton>
-            <CalculatorButton onClick={inputPercent} className="bg-secondary text-secondary-foreground"><Percent /></CalculatorButton>
+            <CalculatorButton onClick={() => performOperation('%')} className="bg-secondary text-secondary-foreground"><Percent /></CalculatorButton>
             <CalculatorButton onClick={() => performOperation('/')} className="bg-accent text-accent-foreground hover:bg-accent/90"><Divide /></CalculatorButton>
             
             <CalculatorButton onClick={() => inputDigit('7')}>7</CalculatorButton>
