@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: 'Calcify',
-  description: 'An intelligent calculator with AI-powered equation simplification.',
+  description: 'A simple and elegant calculator.',
 };
 
 export default function RootLayout({

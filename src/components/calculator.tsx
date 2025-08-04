@@ -3,8 +3,7 @@
 import React, { useState, type FC } from 'react';
 import { Button, type ButtonProps } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Divide, Minus, Percent, Plus, Wand2, X, PlusSquare } from 'lucide-react';
-import { EquationSimplifier } from './equation-simplifier';
+import { Divide, Minus, Percent, Plus, X, PlusSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface CalculatorButtonProps extends ButtonProps {
@@ -38,7 +37,6 @@ export function Calculator() {
   const [firstOperand, setFirstOperand] = useState<number | null>(null);
   const [operator, setOperator] = useState<keyof typeof CalculatorOperations | null>(null);
   const [waitingForSecondOperand, setWaitingForSecondOperand] = useState(false);
-  const [isSimplifierOpen, setIsSimplifierOpen] = useState(false);
 
   const inputDigit = (digit: string) => {
     if (waitingForSecondOperand) {
@@ -116,9 +114,8 @@ export function Calculator() {
             <CalculatorButton onClick={() => applyTrigFunction(Math.sin)} className="bg-secondary text-secondary-foreground">sin</CalculatorButton>
             <CalculatorButton onClick={() => applyTrigFunction(Math.cos)} className="bg-secondary text-secondary-foreground">cos</CalculatorButton>
             <CalculatorButton onClick={() => applyTrigFunction(Math.tan)} className="bg-secondary text-secondary-foreground">tan</CalculatorButton>
-            <CalculatorButton onClick={() => setIsSimplifierOpen(true)} className="bg-accent text-accent-foreground hover:bg-accent/90"><Wand2 /></CalculatorButton>
             
-            <CalculatorButton onClick={clearAll} className="bg-secondary text-secondary-foreground">AC</CalculatorButton>
+            <CalculatorButton onClick={clearAll} className="bg-secondary text-secondary-foreground col-start-1">AC</CalculatorButton>
             <CalculatorButton onClick={toggleSign} className="bg-secondary text-secondary-foreground"><PlusSquare /></CalculatorButton>
             <CalculatorButton onClick={inputPercent} className="bg-secondary text-secondary-foreground"><Percent /></CalculatorButton>
             <CalculatorButton onClick={() => performOperation('/')} className="bg-accent text-accent-foreground hover:bg-accent/90"><Divide /></CalculatorButton>
@@ -144,7 +141,6 @@ export function Calculator() {
           </div>
         </CardContent>
       </Card>
-      <EquationSimplifier open={isSimplifierOpen} onOpenChange={setIsSimplifierOpen} />
     </>
   );
 }
